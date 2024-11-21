@@ -1,5 +1,9 @@
 package ru.taskmanagement.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,7 @@ import ru.taskmanagement.services.UserService;
 
 import java.util.List;
 
+@Tag(name = "User API", description = "Allows to work with users")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
@@ -17,6 +22,10 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(summary = "Get all Users", description = "Returns list of all Users")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+    })
     @GetMapping
     public ResponseEntity<List<UserDtoShort>> getAllUsers() {
         return ResponseEntity
@@ -24,6 +33,11 @@ public class UserController {
                 .body(userService.getAllUsers());
     }
 
+    @Operation(summary = "Get User by id", description = "Returns User as per id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Not found - User was not found")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<UserDtoShort> getUserById(@PathVariable("id") Long id) {
         return ResponseEntity
@@ -31,6 +45,10 @@ public class UserController {
                 .body(userService.getUserById(id));
     }
 
+    @Operation(summary = "Create User", description = "Creates a new User")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully created"),
+    })
     @PostMapping("/add")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return ResponseEntity
@@ -38,6 +56,11 @@ public class UserController {
                 .body(userService.createUser(userDto));
     }
 
+    @Operation(summary = "Update existing User by id", description = "Updates existing User as per id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully updated"),
+            @ApiResponse(responseCode = "404", description = "Not Found - Nothing to update")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto newData) {
         return ResponseEntity
@@ -45,8 +68,14 @@ public class UserController {
                 .body(userService.updateUser(id, newData));
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id) {
+    @Operation(summary = "Delete User by id", description = "Deletes User as per id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "Not Found - Nothing to delete")
+    })
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }

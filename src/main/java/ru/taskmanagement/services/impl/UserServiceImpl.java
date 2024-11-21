@@ -13,6 +13,7 @@ import ru.taskmanagement.repositories.UserRepository;
 import ru.taskmanagement.services.UserService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
         List<Task> tasks = newData.getTasksIds().stream()
                 .map(taskId -> taskRepository.findById(taskId)
                         .orElseThrow(() -> new TaskNotFoundException("Task with id " + taskId + " not found")))
-                .toList();
+                .collect(Collectors.toList());
 
         user.setFullName(newData.getFullName());
         user.setUsername(newData.getUserName());
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newData.getPassword());
         user.setRole(newData.getRole());
         user.setTasks(tasks);
+
         return UserDto.fromUser(userRepository.save(user));
     }
 }
