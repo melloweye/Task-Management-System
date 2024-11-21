@@ -74,7 +74,7 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "Not Found - Nothing to delete")
     })
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteTask(@PathVariable("id") Long id) {
+    public ResponseEntity<TaskDto> deleteTask(@PathVariable("id") Long id) {
         taskService.deleteTaskById(id);
         return ResponseEntity.noContent().build();
     }

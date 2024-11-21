@@ -2,7 +2,6 @@ package ru.taskmanagement.dto.task;
 
 import lombok.*;
 import ru.taskmanagement.models.Task;
-import ru.taskmanagement.models.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
