@@ -21,9 +21,9 @@ public class TaskDtoShort {
 
     private String status;
 
-    private String createdBy;
+    private Long createdBy;
 
-    private String updatedBy;
+    private Long updatedBy;
 
     public static TaskDtoShort fromTask(Task task) {
         return TaskDtoShort.builder()

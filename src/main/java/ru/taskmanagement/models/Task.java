@@ -23,7 +23,7 @@ public class Task {
 
     private String status;
 
-    private String createdBy;
+    private Long createdBy;
 
-    private String updatedBy;
+    private Long updatedBy;
 }

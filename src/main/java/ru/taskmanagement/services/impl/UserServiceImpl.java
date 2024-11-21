@@ -79,7 +79,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newData.getPassword());
         user.setRole(newData.getRole());
         user.setTasks(tasks);
-
         return UserDto.fromUser(userRepository.save(user));
     }
 }

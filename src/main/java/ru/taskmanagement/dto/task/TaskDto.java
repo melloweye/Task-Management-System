@@ -23,9 +23,9 @@ public class TaskDto {
 
     private String status;
 
-    private String createdBy;
+    private Long createdBy;
 
-    private String updatedBy;
+    private Long updatedBy;
 
     public static TaskDto fromTask(Task task) {
         return TaskDto.builder()
