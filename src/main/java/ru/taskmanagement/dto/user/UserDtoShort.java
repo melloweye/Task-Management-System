@@ -34,7 +34,7 @@ public class UserDtoShort {
                 .fullName(user.getFullName())
                 .userName(user.getUsername())
                 .email(user.getEmail())
-                .role(user.getRole())
+                .role(String.valueOf(user.getRole()))
                 .tasks(user.getTasks())
                 .build();
     }

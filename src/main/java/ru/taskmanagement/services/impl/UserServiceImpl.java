@@ -11,6 +11,7 @@ import ru.taskmanagement.models.User;
 import ru.taskmanagement.repositories.TaskRepository;
 import ru.taskmanagement.repositories.UserRepository;
 import ru.taskmanagement.services.UserService;
+import ru.taskmanagement.utils.Role;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
                         .username(user.getUserName())
                         .email(user.getEmail())
                         .password(user.getPassword())
-                        .role(user.getRole())
+                        .role(Role.valueOf(user.getRole()))
                         .tasks(tasks)
                         .build()
         ));
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(newData.getUserName());
         user.setEmail(newData.getEmail());
         user.setPassword(newData.getPassword());
-        user.setRole(newData.getRole());
+        user.setRole(Role.valueOf(newData.getRole()));
         user.setTasks(tasks);
         return UserDto.fromUser(userRepository.save(user));
     }

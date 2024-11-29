@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
+import ru.taskmanagement.utils.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,8 @@ public class User {
 
     @NotBlank
     @Size(min = 6, max = 20)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany
     private List<Task> tasks = new ArrayList<>();
