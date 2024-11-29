@@ -33,7 +33,7 @@ public class UserDto {
                 .fullName(user.getFullName())
                 .userName(user.getUsername())
                 .email(user.getEmail())
-                .role(String.valueOf(user.getRole()))
+                .role(user.getRole())
                 .tasksIds(user.getTasks().stream()
                         .map(Task::getId)
                         .collect(Collectors.toList()))

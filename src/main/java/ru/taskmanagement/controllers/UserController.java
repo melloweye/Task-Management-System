@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.taskmanagement.dto.user.UserDto;
 import ru.taskmanagement.dto.user.UserDtoShort;
@@ -18,7 +17,7 @@ import java.util.List;
 @Tag(name = "User API", description = "Allows to work with users")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -27,8 +26,7 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
     })
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
     public ResponseEntity<List<UserDtoShort>> getAllUsers() {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -41,7 +39,6 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Not found - User was not found")
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserDtoShort> getUserById(@PathVariable("id") Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
