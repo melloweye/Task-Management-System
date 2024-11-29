@@ -53,5 +53,6 @@ public class User {
     private Role role;
 
     @OneToMany
+    @Builder.Default
     private List<Task> tasks = new ArrayList<>();
 }
