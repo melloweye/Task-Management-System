@@ -50,6 +50,6 @@ public class User {
     @Size(min = 6, max = 20)
     private String role;
 
-    @OneToMany
-    private List<Task> tasks = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
 }
