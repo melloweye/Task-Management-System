@@ -2,6 +2,7 @@ package ru.taskmanagement.dto.task;
 
 import lombok.*;
 import ru.taskmanagement.models.Task;
+import ru.taskmanagement.models.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class TaskDtoShort {
 
     private String status;
 
-    private Long createdBy;
+    private Long userId;
 
     private Long updatedBy;
 
@@ -31,7 +32,7 @@ public class TaskDtoShort {
                 .description(task.getDescription())
                 .priority(task.getPriority())
                 .status(task.getStatus())
-                .createdBy(task.getCreatedBy())
+                .userId(task.getCreatedBy().getId())
                 .updatedBy(task.getUpdatedBy())
                 .build();
     }

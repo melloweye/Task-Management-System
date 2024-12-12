@@ -1,5 +1,6 @@
 package ru.taskmanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "task")
 public class Task {
 
     @Id
@@ -23,7 +25,10 @@ public class Task {
 
     private String status;
 
-    private Long createdBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    @JsonBackReference
+    private User createdBy;
 
     private Long updatedBy;
 }

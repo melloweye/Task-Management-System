@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.taskmanagement.dto.task.TaskDto;
 import ru.taskmanagement.dto.task.TaskDtoShort;
 import ru.taskmanagement.exceptions.TaskNotFoundException;
+import ru.taskmanagement.exceptions.UserNotFoundException;
 import ru.taskmanagement.models.Task;
+import ru.taskmanagement.models.User;
 import ru.taskmanagement.repositories.TaskRepository;
+import ru.taskmanagement.repositories.UserRepository;
 import ru.taskmanagement.services.TaskService;
 
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
 
     @Override
@@ -42,13 +46,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDtoShort createTask(TaskDtoShort task) {
+        User user = userRepository.findById(task.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User with id " + task.getUserId() + " not found"));
+
         return TaskDtoShort.fromTask(taskRepository.save(
                 Task.builder()
                         .title(task.getTitle())
                         .description(task.getDescription())
                         .priority(task.getPriority())
                         .status(task.getStatus())
-                        .createdBy(task.getCreatedBy())
+                        .createdBy(user)
                         .updatedBy(task.getUpdatedBy())
                         .build()
         ));
@@ -63,7 +70,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(newData.getDescription());
         task.setPriority(newData.getPriority());
         task.setStatus(newData.getStatus());
-        task.setCreatedBy(newData.getCreatedBy());
+        task.setCreatedBy(task.getCreatedBy());
         task.setUpdatedBy(newData.getUpdatedBy());
 
         return TaskDtoShort.fromTask(taskRepository.save(task));
